@@ -25,7 +25,7 @@ public  class ExtentReport {
     public static ExtentTest test;
     private static ExtentSparkReporter spark;
     static String timeStamp = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
-    static String FileReporter ="C:/Users/digilink/Downloads/SeleniumRevision/LumaCucumber2/src/test/java/reporting" +timeStamp +".html";
+    static String FileReporter ="C:/Users/digilink/Downloads/SeleniumRevision/LumaCucumber2/src/test/java/reporting/html_" +timeStamp +".html";
     static WebDriver driver = LoginSteps.driver;
 
     public static void initReports() {
