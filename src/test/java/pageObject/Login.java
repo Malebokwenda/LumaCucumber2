@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.time.Duration;
 
 import static reporting.ExtentReport.getScreenshot;
+import static reporting.ExtentReport.test;
 
 public class Login {
     public WebDriver driver= LoginSteps.driver;
@@ -25,14 +26,16 @@ public class Login {
     }
     public static void LogIn(String Email, String password) throws IOException {
 
-       ExtentReport.test.info("User entered correct credentials");
+//       ExtentReport.createTest("User Login");
+
+        test.info("User entered correct credentials");
 
         WebElement emailInput = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("(//input[@id='email'])[1]")));
         emailInput.sendKeys(Email);
 
         WebElement passwordInput = LoginSteps.driver.findElement(By.xpath("(//input[@id='pass'])[1]"));
         passwordInput.sendKeys(password);
-        ExtentReport.test.info("Value entered", MediaEntityBuilder.createScreenCaptureFromPath(getScreenshot("Sign In")).build());
+        test.info("Value entered", MediaEntityBuilder.createScreenCaptureFromPath(getScreenshot("Sign In")).build());
 
 
 

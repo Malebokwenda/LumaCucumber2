@@ -22,30 +22,10 @@ public class LoginSteps extends ExtentReport{
 
     public static WebDriver driver;
     public final static int TIMEOUT = 10;
-    @BeforeSuite
-    public static void beforeSuite() {
-        ExtentReport.initReports();
-    }
 
-    @AfterSuite
-    public static void afterSuite() throws IOException {
-        ExtentReport.flushReports();
-    }
-
-    @AfterMethod
-    public  void getResult(ITestResult result) {
-        if (result.getStatus() == ITestResult.FAILURE) {
-            ExtentReport.test.log(Status.FAIL, result.getThrowable());
-        } else if (result.getStatus() == ITestResult.SUCCESS) {
-            ExtentReport.test.log(Status.PASS, result.getTestName());
-            System.out.println("Test Passed");
-        } else {
-            ExtentReport.test.log(Status.SKIP, result.getTestName());
-        }
-    }
     @Before
     public void setUp() {
-//        initReports();
+//        ExtentReport.initReports();
         WebDriverManager.chromedriver().setup();
         driver = new ChromeDriver();
         driver.get("https://magento.softwaretestingboard.com");
@@ -54,9 +34,8 @@ public class LoginSteps extends ExtentReport{
     }
     @Given("User is on LumaLogin page {string}")
     public void user_is_on_luma_login_page(String url) throws IOException {
-        ExtentReport.test = extent.createTest("Sign In");
-
-//        createTest("Sign In");
+//        ExtentReport.test = extent.createTest("Sign In");
+        createTest("Sign In");
         Login.SignInButton();
     }
 
@@ -80,7 +59,7 @@ public class LoginSteps extends ExtentReport{
     @After
     public void teardown() throws IOException {
         driver.quit();
-//        flushReports();
+//        ExtentReport.flushReports();
     }
 
 }

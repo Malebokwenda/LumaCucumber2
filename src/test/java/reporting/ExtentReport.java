@@ -2,12 +2,15 @@ package reporting;
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
 
+import com.aventstack.extentreports.Status;
 import com.aventstack.extentreports.reporter.ExtentSparkReporter;
 import com.aventstack.extentreports.reporter.configuration.Theme;
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
+import org.testng.ITestResult;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeSuite;
 import stepDefinition.LoginSteps;
@@ -25,9 +28,10 @@ public  class ExtentReport {
     public static ExtentTest test;
     private static ExtentSparkReporter spark;
     static String timeStamp = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
-    static String FileReporter ="C:/Users/digilink/Downloads/SeleniumRevision/LumaCucumber2/src/test/java/reporting/html_" +timeStamp +".html";
+    static String FileReporter ="src/test/java/reporting/html/html_" +timeStamp +".html";
     static WebDriver driver = LoginSteps.driver;
 
+    @BeforeSuite
     public static void initReports() {
         extent = new ExtentReports();
         spark = new ExtentSparkReporter(FileReporter);
@@ -50,8 +54,19 @@ public  class ExtentReport {
         String path = System.getProperty("user.dir") + "src/test/java/reporting/Screenshots/" + fileName;
         FileUtils.copyFile(source, new File(path));
         return path;
+    } @AfterMethod
+    public  void getResult(ITestResult result) {
+        if (result.getStatus() == ITestResult.FAILURE) {
+            ExtentReport.test.log(Status.FAIL, result.getThrowable());
+        } else if (result.getStatus() == ITestResult.SUCCESS) {
+            ExtentReport.test.log(Status.PASS, result.getTestName());
+            System.out.println("Test Passed");
+        } else {
+            ExtentReport.test.log(Status.SKIP, result.getTestName());
+        }
     }
 
+@AfterSuite
     public static void flushReports() throws IOException {
         extent.flush();
         Desktop.getDesktop().browse(new File(FileReporter).toURI());

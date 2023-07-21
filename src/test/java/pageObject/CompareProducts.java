@@ -11,7 +11,7 @@ import stepDefinition.LoginSteps;
 import java.io.IOException;
 import java.time.Duration;
 
-public class CompareProducts {
+public class CompareProducts extends LoginSteps{
     static WebDriverWait wait = new WebDriverWait(LoginSteps.driver, Duration.ofSeconds(10));
     public static void scrollToHotSellers(){
 
@@ -21,22 +21,25 @@ public class CompareProducts {
 
     }
     public static  void HoverToClickCompareIcon() throws IOException, InterruptedException {
+        test.info("User clicks an img to add item to compare");
 //          selected colour so that the hover won't disappear
         WebElement hoverColor = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("(//div[@id='option-label-color-93-item-57'])[1]")));
         hoverColor.click();
-
+        test.info("Value entered", MediaEntityBuilder.createScreenCaptureFromPath(getScreenshot("CompareIcon")).build());
 //        click add to compare button
         LoginSteps.driver.findElement(By.xpath("(//a[@title='Add to Compare'])[1]")).click();
         Thread.sleep(1500);
     }
     public static  void compareOnImgClicked() throws IOException, InterruptedException {
+        test.info("User clicks an img to add item to compare");
 //        find product to compare
         WebElement BreatheTank = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("(//img[@alt='Breathe-Easy Tank'])[1]")));
         BreatheTank.click();
 //        click add to compare button
-
         WebElement CompareButton = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("(//span[contains(text(),'Add to Compare')])[1]")));
         CompareButton.click();
+        test.info("Value entered", MediaEntityBuilder.createScreenCaptureFromPath(getScreenshot("compareOnImgClicked")).build());
+
         Thread.sleep(1500);
     }
 
@@ -48,9 +51,11 @@ public class CompareProducts {
 
     }
     public static void removeComparedItem() throws IOException, InterruptedException {
+        test.info("User is removing item on product compare page");
         WebElement removeElement = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("(//a[@title='Remove Product'])[1]")));
         removeElement.click();
-//         test.pass("Value entered", MediaEntityBuilder.createScreenCaptureFromPath(getScreenshot("removeComparedItem")).build());
+        test.info("Value entered", MediaEntityBuilder.createScreenCaptureFromPath(getScreenshot("remove Compared Item")).build());
+
     }
 
     public static void okAlertButton() throws InterruptedException {

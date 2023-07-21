@@ -18,7 +18,8 @@ public class Checkout extends LoginSteps {
     static WebDriverWait wait = new WebDriverWait(LoginSteps.driver, Duration.ofSeconds(10));
 
     public static void captureShippingInfo(String FirstName, String LastName, String SCompany, String SCountry, String SAddress, String SCity, String SProvince, String SCode, String SPhone) throws IOException {
-//        Fill in personal info
+        test.info("User is filling shipping information");
+        //        Fill in personal info
         WebElement firstNameInput = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//input[contains(@name, \"firstname\")]")));
         firstNameInput.clear();
         firstNameInput.sendKeys(FirstName);
@@ -40,6 +41,8 @@ public class Checkout extends LoginSteps {
         WebElement cityInput = LoginSteps.driver.findElement(By.name("city"));
         cityInput.clear();
         cityInput.sendKeys(SCity);
+        test.info("Value entered", MediaEntityBuilder.createScreenCaptureFromPath(getScreenshot("Shipping Info1")).build());
+
 
 
 //        Select country
@@ -72,7 +75,8 @@ public class Checkout extends LoginSteps {
         actions.moveToElement(shippingMethod).click().perform();
 
         LoginSteps.driver.findElement(By.xpath("//*[@id=\"shipping-method-buttons-container\"]/div/button/span")).click();
-//        place order
+        test.info("Value entered", MediaEntityBuilder.createScreenCaptureFromPath(getScreenshot("Shipping Info")).build());
+        //        place order
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("(//div[@class='primary'])[3]"))).click();
 
 

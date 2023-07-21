@@ -25,6 +25,7 @@ public class Cart extends  LoginSteps{
 
     }
     public static  void heroHoodieCartButton() throws IOException {
+        test.info("Value entered", MediaEntityBuilder.createScreenCaptureFromPath(getScreenshot("Hero Hoodie")).build());
         LoginSteps.driver.findElement(By.xpath("//*[@id=\"maincontent\"]/div[3]/div/div[2]/div[3]/div/div/ol/li[4]/div/div/div[3]/div/div[1]/form/button")).click();
 
     }

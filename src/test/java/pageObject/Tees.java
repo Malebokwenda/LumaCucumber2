@@ -20,23 +20,21 @@ public class Tees extends LoginSteps {
     static Actions actions = new Actions(LoginSteps.driver);
     static WebDriverWait wait = new WebDriverWait(LoginSteps.driver, Duration.ofSeconds(10));
 
-    public Tees(WebDriver driver) {
-        this.driver = driver;
-    }
 
     public static void navigateToTopsTees() throws InterruptedException, IOException {
-      test.info("User  hovers from men to tees to find an item ");
+        test.info("User  hovers from men to tees to find an item ");
 //        hover on men
         WebElement element =
                 LoginSteps.driver.findElement(By.xpath("(//span[normalize-space()='Men'])[1]"));
         actions.moveToElement(element).perform();
         Thread.sleep(2500);
-//        hover on tops
-        test.info("Value entered", MediaEntityBuilder.createScreenCaptureFromPath(getScreenshot("tees")).build());
 //       click tees
 
     }
-    public static  void hoverOnTops() throws InterruptedException {
+    public static  void hoverOnTops() throws InterruptedException, IOException {
+//        hover on tops
+        test.info("Value entered", MediaEntityBuilder.createScreenCaptureFromPath(getScreenshot("tees")).build());
+
         WebElement tops = LoginSteps.driver.findElement(By.xpath("(//span[contains(text(),'Tops')])[2]"));
         actions.moveToElement(tops).build().perform();
         Thread.sleep(2500);
@@ -49,17 +47,21 @@ public class Tees extends LoginSteps {
 
 
     public static void selectThreeStarsTee() throws IOException {
+        test.info("user looks for a 3 starts item to add to cart");
+        test.info("Value entered", MediaEntityBuilder.createScreenCaptureFromPath(getScreenshot("three StarTee")).build());
+//
 //       find 3 stars product item  to adds to cart
-     LoginSteps.driver.findElement(By.xpath("/html[1]/body[1]/div[1]/main[1]/div[3]/div[1]/div[3]" +
+        LoginSteps.driver.findElement(By.xpath("/html[1]/body[1]/div[1]/main[1]/div[3]/div[1]/div[3]" +
                 "/ol[1]/li[3]/div[1]/a[1]/span[1]/span[1]/img[1]")).click();
 
     }
 
     public static void searchForItem(String productName) throws InterruptedException, IOException {
-
+        test.info("User is searching for an item on the search field");
 //        input on search box
         WebElement searchInput = LoginSteps.driver.findElement(By.id("search"));
         searchInput.sendKeys(productName);
+        test.info("Value entered", MediaEntityBuilder.createScreenCaptureFromPath(getScreenshot("Search for Item")).build());
 
 //        click search button
         LoginSteps.driver.findElement(By.xpath("(//button[@title='Search'])[1]")).click();
@@ -75,20 +77,24 @@ public class Tees extends LoginSteps {
         mikoPullover.click();
 
     }
-    public static void pullOverItem(){
+    public static void pullOverItem() throws IOException {
+        test.info("User selects size and color");
+
 //                   size
-        WebElement  size = wait.until(ExpectedConditions.visibilityOfElementLocated
-                (By.xpath("(//div[@id='option-label-size-143-item-168'])[1]")));
+        WebElement  size = wait.until(ExpectedConditions.presenceOfElementLocated
+                (By.xpath("//*[@id=\"option-label-size-143-item-168\"]")));
         actions.moveToElement(size).click().perform();
 
 //                    Color
         WebElement color= wait.until(ExpectedConditions.visibilityOfElementLocated
                 (By.xpath("(//div[@id='option-label-color-93-item-56'])[1]")));
         actions.moveToElement(color).click().perform();
+        test.info("Value entered", MediaEntityBuilder.createScreenCaptureFromPath(getScreenshot("Select size")).build());
+
     }
 
     public static void  heroHoodie(){
-
+        test.info("User adds item to add ");
 //        size
         WebElement hoodieSize = wait.until(ExpectedConditions.visibilityOfElementLocated
                 (By.xpath("(//div[@id='option-label-size-143-item-168'])[4]")));

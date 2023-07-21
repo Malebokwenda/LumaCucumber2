@@ -15,21 +15,26 @@ import static reporting.ExtentReport.extent;
 public class TeesSteps{
 
     @Given("User is on Luma Home page {string}")
-    public void user_is_on_luma_home_page(String string) {
-        ExtentReport.test = extent.createTest("Three Stars Tee");
+    public void user_is_on_luma_home_page(String string) throws IOException {
+        createTest("Three Stars Tee");
+      /*  Login.SignInButton();
+        email = ExcelReader.getCellData(1, 3);
+         password = ExcelReader.getCellData(1, 4);
+        Login.LogIn(email, password);
+
+       */
         Login.goTo();
     }
 
 
     @When("user navigate to Men category")
     public void user_navigate_to_men_category() throws IOException, InterruptedException {
-        Login.SignInButton();
         Login.goTo();
-         Tees.navigateToTopsTees();
+        Tees.navigateToTopsTees();
     }
 
     @When("user select Tops subcategory")
-    public void user_select_tops_subcategory() throws InterruptedException {
+    public void user_select_tops_subcategory() throws InterruptedException, IOException {
         Tees.hoverOnTops();
     }
 
@@ -51,12 +56,14 @@ public class TeesSteps{
 
     @When("user search for {string}")
     public void user_search_for(String productName) throws IOException, InterruptedException {
+        createTest("Search for item");
+
         productName = ExcelReader.getCellData(1,5);
         Tees.searchForItem(productName);
     }
 
     @When("user select any size from the available options")
-    public void user_select_any_size_from_the_available_options() {
+    public void user_select_any_size_from_the_available_options() throws IOException {
         Tees.scrollToMikoPullover();
         Tees.pullOverItem();
     }
