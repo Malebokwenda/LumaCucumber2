@@ -10,7 +10,6 @@ import utilities.ExcelReader;
 import java.io.IOException;
 
 import static reporting.ExtentReport.createTest;
-import static reporting.ExtentReport.extent;
 
 public class TeesSteps{
 

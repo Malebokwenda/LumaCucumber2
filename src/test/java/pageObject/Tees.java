@@ -69,12 +69,14 @@ public class Tees extends LoginSteps {
         Thread.sleep(2000);
     }
 
-    public static void scrollToMikoPullover(){
+    public static void scrollToMikoPullover() throws IOException {
 //       Find orange Miko Pullover Hoodie
         JavascriptExecutor js = (JavascriptExecutor)LoginSteps.driver;
         WebElement mikoPullover = LoginSteps.driver.findElement(By.xpath("(//img[@alt='Miko Pullover Hoodie'])[1]"));
         js.executeScript("arguments[0].scrollIntoView();", mikoPullover);
         mikoPullover.click();
+        test.info("Value entered", MediaEntityBuilder.createScreenCaptureFromPath(getScreenshot("Search for Item")).build());
+
 
     }
     public static void pullOverItem() throws IOException {

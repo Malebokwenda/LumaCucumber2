@@ -5,6 +5,8 @@ import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.Status;
 import com.aventstack.extentreports.reporter.ExtentSparkReporter;
 import com.aventstack.extentreports.reporter.configuration.Theme;
+import io.cucumber.java.AfterStep;
+import io.cucumber.java.Scenario;
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
@@ -23,7 +25,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public  class ExtentReport {
+public  class ExtentReport  {
     public static ExtentReports extent;
     public static ExtentTest test;
     private static ExtentSparkReporter spark;
@@ -54,19 +56,35 @@ public  class ExtentReport {
         String path = System.getProperty("user.dir") + "src/test/java/reporting/Screenshots/" + fileName;
         FileUtils.copyFile(source, new File(path));
         return path;
-    } @AfterMethod
-    public  void getResult(ITestResult result) {
-        if (result.getStatus() == ITestResult.FAILURE) {
-            ExtentReport.test.log(Status.FAIL, result.getThrowable());
-        } else if (result.getStatus() == ITestResult.SUCCESS) {
-            ExtentReport.test.log(Status.PASS, result.getTestName());
-            System.out.println("Test Passed");
-        } else {
-            ExtentReport.test.log(Status.SKIP, result.getTestName());
-        }
     }
 
-@AfterSuite
+    @AfterStep
+    public static void after_step(Scenario scenario){
+    if (scenario.isFailed()) {
+        ExtentReport.test.log(Status.FAIL, String.valueOf(scenario));
+    }}
+//    else if (scenario.isPassed()){
+//       ExtentReport.test.log(Status.PASS, scenario.getTestName());
+//            System.out.println("Test Passed");
+//    }
+//    else(scenario.isSkipped(){
+//      ExtentReport.test.log(Status.SKIP, scenario.getTestName());
+//    }}
+//    @AfterMethod
+//    public static void getResult(ITestResult result) {
+//        if (result.getStatus() == ITestResult.FAILURE) {
+//            ExtentReport.test.log(Status.FAIL, result.getThrowable());
+//        } else if (result.getStatus() == ITestResult.SUCCESS) {
+//            ExtentReport.test.log(Status.PASS, result.getTestName());
+//            System.out.println("Test Passed");
+//        } else {
+//            ExtentReport.test.log(Status.SKIP, result.getTestName());
+//        }
+//
+//
+//    }
+
+    @AfterSuite
     public static void flushReports() throws IOException {
         extent.flush();
         Desktop.getDesktop().browse(new File(FileReporter).toURI());

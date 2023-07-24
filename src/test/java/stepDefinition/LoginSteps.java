@@ -1,16 +1,15 @@
 package stepDefinition;
 
-import com.aventstack.extentreports.Status;
 import io.cucumber.java.After;
+import io.cucumber.java.AfterAll;
 import io.cucumber.java.Before;
+import io.cucumber.java.BeforeAll;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.testng.ITestResult;
-import org.testng.annotations.*;
 import pageObject.Login;
 import reporting.ExtentReport;
 import utilities.ExcelReader;
@@ -22,10 +21,9 @@ public class LoginSteps extends ExtentReport{
 
     public static WebDriver driver;
     public final static int TIMEOUT = 10;
-
     @Before
-    public void setUp() {
-//        ExtentReport.initReports();
+    public static void before_all() {
+        ExtentReport.initReports();
         WebDriverManager.chromedriver().setup();
         driver = new ChromeDriver();
         driver.get("https://magento.softwaretestingboard.com");
@@ -34,8 +32,7 @@ public class LoginSteps extends ExtentReport{
     }
     @Given("User is on LumaLogin page {string}")
     public void user_is_on_luma_login_page(String url) throws IOException {
-//        ExtentReport.test = extent.createTest("Sign In");
-        createTest("Sign In");
+        createTest("Sign in");
         Login.SignInButton();
     }
 
@@ -56,10 +53,11 @@ public class LoginSteps extends ExtentReport{
     public void user_should_be_logged_in_to_my_account() {
         Login.goTo();
     }
-    @After
-    public void teardown() throws IOException {
-        driver.quit();
-//        ExtentReport.flushReports();
-    }
 
+    @After
+    public  static void after_all() throws IOException {
+        driver.quit();
+
+        flushReports();
+    }
 }
